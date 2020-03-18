@@ -1,5 +1,5 @@
-#Android Notifications & Texts - A.N.T.
-<center>**This project is under development.**</center>  
+# Android Notifications & Texts - A.N.T.
+**This project is under development.**
 
 ```
               ,
