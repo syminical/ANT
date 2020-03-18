@@ -1,0 +1,83 @@
+Copyright (c) 2020 Alexandru Manaila. All Rights Reserved.
+
+              ,
+      _,-'\   /|   .    .    /`.
+  _,-'     \_/_|_  |\   |`. /   `._,--===--.__
+ ^       _/"/  " \ : \__|_ /.   ,'    :.  :. .`-._
+        // ^   /7 t'""    "`-._/ ,'\   :   :  :  .`.
+        Y      L/ )\         ]],'   \  :   :  :   : `.
+        |        /  `.n_n_n,','\_    \ ;   ;  ;   ;  _>
+        |__    ,'     |  \`-'    `-.__\_______.==---'
+       //  `""\\      |   \            \
+       \|     |/      /    \            \
+                     /     |             `.
+                    /      |               ^
+                   ^       |
+                           ^
+                           
+This is the design documentation for A.N.T. (Android Notifications and Texts)
+
+This project will have a mobile app for android, and a PC program (for windows, maybe Mac/Linux too).
+The PC program can display the notifications list from the phone, show new notifications, read and send text messages remotely, and has some settings for customization.
+The app can register new connections with a PC, list all connections it has, close connections, and it has some settings.
+
+Desktop Program (ANT-1):
+
+   LANGUAGE: Java (Springboot?) or Python
+
+   FEATURES:
+      1.) Drop/paste/select files to phone.
+      2.) Share clipboard to phone. (text)
+
+Mobile App (ANT-2):
+
+   LANGUAGE: Java?
+
+   PERMISSIONS:
+      - Notifications list
+      - New notifications
+      - always running?
+      - no notification icon?
+      - Contacts? (might be needed to send txts)
+      - phone state? (idk if ANT-2 needs to stop during calls)
+      - storage (settings and connections)
+
+BOTH:
+
+   * 2-way communication
+      - Both need to be able to make and answer requests.
+      1. REST API webserver
+      2. Sockets?
+   
+   FEATURES:
+      0.) Tutorial
+           - One-time-thing auto run, then can be redone.
+            ANT-1:
+             - Click through, ESC anytime.
+            ANT-2:
+             - Swipe card tutorial explaining features, skip anytime.
+      1.) Registration
+            ANT-1:
+             - Generates a QR code that needs to be scanned.
+             - Data sharing options (what information ANT-1 requests / can work with).
+            ANT-2:
+             - The ANT-2 tries to take a picture of a QR code from ANT-1, which will be displayed on a monitor.
+                - Ant-1 & Ant-2 can now communicate and set up encryption.
+             - ANT-2 should get some data from the QR code:
+                1. ANT-1's (W)LAN name + PC address.
+                    - Notify the user if the phone is not on that network.
+                2. Any data sharing preferences selected in ANT-1.
+      2.) Registered Connections List
+           - Display all connections.
+              - connection state is also shown (ACTIVE, INACTIVE)
+           - Connections can be redone (new QR code), deleted, or hibernated.
+              - Hibernated connections are forced into an inactive state until the user wakes them up in the app.
+           - Each connection has settings to control what information is shared between ANTs.
+             - New connections can be added.
+      3.) Connection Settings
+           - Sharing options are shown for a specific connection.
+             - Notifications List
+             - New Notifications
+             - Existing Text Message Conversations
+             - Sending New Text Messages
+             - Contacts?
