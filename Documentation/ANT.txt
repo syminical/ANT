@@ -26,13 +26,25 @@ Desktop Program (ANT-1):
    LANGUAGE: Java (Springboot?) or Python
 
    FEATURES:
-      1.) Drop/paste/select files to phone.
-      2.) Share clipboard to phone. (text)
+      1.) ? Drop/paste/select files to phone.
+      2.) ? Share clipboard to phone. (text)
+      3.) collapsed / minimal mode (hover over small icon to expand list, always on screen)
+      4.) Tabs
+           - Connection Settings
+           - Notifications List
+           - Texts
+           - About
+      5.) Intro screen (no current connections)
+      6.) Startup splash
 
 Mobile App (ANT-2):
 
    LANGUAGE: Java?
 
+   FEATURES:
+      0.) Tutorial
+           - Swipe card tutorial explaining features, skip anytime.
+             
    PERMISSIONS:
       - Notifications list
       - New notifications
@@ -50,12 +62,6 @@ BOTH:
       2. Sockets?
    
    FEATURES:
-      0.) Tutorial
-           - One-time-thing auto run, then can be redone.
-            ANT-1:
-             - Click through, ESC anytime.
-            ANT-2:
-             - Swipe card tutorial explaining features, skip anytime.
       1.) Registration
             ANT-1:
              - Generates a QR code that needs to be scanned.
@@ -67,13 +73,13 @@ BOTH:
                 1. ANT-1's (W)LAN name + PC address.
                     - Notify the user if the phone is not on that network.
                 2. Any data sharing preferences selected in ANT-1.
-      2.) Registered Connections List
-           - Display all connections.
-              - connection state is also shown (ACTIVE, INACTIVE)
-           - Connections can be redone (new QR code), deleted, or hibernated.
-              - Hibernated connections are forced into an inactive state until the user wakes them up in the app.
-           - Each connection has settings to control what information is shared between ANTs.
-             - New connections can be added.
+      2.) ? Registered Connections List
+             - Display all connections.
+                - connection state is also shown (ACTIVE, INACTIVE)
+             - Connections can be redone (new QR code), deleted, or hibernated.
+                - Hibernated connections are forced into an inactive state until the user wakes them up in the app.
+             - Each connection has settings to control what information is shared between ANTs.
+               - New connections can be added.
       3.) Connection Settings
            - Sharing options are shown for a specific connection.
              - Notifications List
