@@ -41,6 +41,8 @@ public class BackgroundPanel extends JPanel
 	 */
 	public BackgroundPanel(Image image, int style)
 	{
+                this.setOpaque(false);
+                this.setBackground(new Color(0,0,0,0));
 		setImage( image );
 		setStyle( style );
 		setLayout( new BorderLayout() );
@@ -189,13 +191,13 @@ public class BackgroundPanel extends JPanel
 
 		//  Invoke the painter for the background
 
-		/*if (painter != null)
+		if (painter != null)
 		{
 			Dimension d = getSize();
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setPaint(painter);
 			g2.fill( new Rectangle(0, 0, d.width, d.height) );
-		}*/
+		}
 
 		//  Draw the image
 
@@ -260,6 +262,6 @@ public class BackgroundPanel extends JPanel
 		int height = d.height - insets.top - insets.left;
 		float x = (width - image.getWidth(null)) * alignmentX;
 		float y = (height - image.getHeight(null)) * alignmentY;
-		g.drawImage(image, (int)x + insets.left, (int)y + insets.top, new Color(0,0,0,0), this);
+		g.drawImage(image, (int)x + insets.left, (int)y + insets.top, this);
 	}
 }

@@ -16,12 +16,14 @@ public class ANT_GUI {
    //public GameController GC;
    //private WindowBox MainBox, SettingsBox, InfoBox, DevBox;
    private ANTFrame MainFrame;
+   private DragListener DL;
    private final Dimension MAIN_BOX_SIZE = new Dimension( 410, 438 ), SETTINGS_BOX_SIZE = new Dimension( 200, 300 ), INFO_BOX_SIZE = new Dimension( 350, 300 ), DEV_BOX_SIZE = new Dimension( 251, 75 );
    private Image[] MainAssets;
 
 
    public ANT_GUI() {
       MainAssets = new Image[2];
+      DL = new DragListener(this);
       
       //GC = new GameController(this);
       //GC.begin();
@@ -52,7 +54,7 @@ public class ANT_GUI {
             JPanel TitlePanel = new JPanel();
                this.fixComponentSizes(TitlePanel, new Dimension(410, 33));
                TitlePanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0));
-               TitlePanel.add(new BackgroundPanel(MainAssets[1], BackgroundPanel.ACTUAL));
+               TitlePanel.add(new AlphaContainer(new BackgroundPanel(MainAssets[1], BackgroundPanel.ACTUAL)));
             ((BackgroundPanel)(this.getContentPane())).add(TitlePanel);
          }
          
@@ -65,6 +67,8 @@ public class ANT_GUI {
             this.setVisible(true);
          }
       };
+      MainFrame.addMouseListener(DL);
+      MainFrame.addMouseMotionListener(DL);
    }
    
    public static void main(String[] Args) {
