@@ -18,7 +18,7 @@ public class ANT_GUI {
    private ANTFrame MainFrame;
    private static DragListener DL;
    private final Dimension MAIN_BOX_SIZE = new Dimension( 410, 438 ), SETTINGS_BOX_SIZE = new Dimension( 200, 300 ), INFO_BOX_SIZE = new Dimension( 350, 300 ), DEV_BOX_SIZE = new Dimension( 251, 75 );
-   private Image[] MainAssets;
+   private Image[] FrameAssets;
 
 
    public ANT_GUI() {
@@ -37,9 +37,9 @@ public class ANT_GUI {
    private boolean loadAssets() {
       try {
          //this.getClass().getResource("../../../../Images/UIExport/FRAME.png")
-         MainAssets[0] = ImageIO.read( new File("Images/UIexport/FRAME.png") );
-         MainAssets[1] = ImageIO.read( new File("Images/UIexport/icons/closeXButton/closeX.png") );
-         MainAssets[2] = ImageIO.read( new File("Images/UIexport/icons/closeXButton/closeXActive.png") );
+         FrameAssets[0] = ImageIO.read( new File("Images/UIexport/FRAME.png") );
+         FrameAssets[1] = ImageIO.read( new File("Images/UIexport/icons/closeXButton/closeX.png") );
+         FrameAssets[2] = ImageIO.read( new File("Images/UIexport/icons/closeXButton/closeXActive.png") );
       } catch (Exception e) { return false; }
       return true;
    }
@@ -53,7 +53,7 @@ public class ANT_GUI {
          
          public void addComponents() {
             JPanel TitlePanel = new JPanel();
-               this.fixComponentSizes(TitlePanel, new Dimension(410, 33));
+               this.fixComponentSizes(TitlePanel, new Dimension(410, 34));
                TitlePanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0));
                TitlePanel.add(new MouseOverComponent(Arrays.copyOfRange(MainAssets, 1, 3)));
                //TitlePanel.add(new AlphaContainer(new BackgroundPanel(MainAssets[1], BackgroundPanel.ACTUAL)));
