@@ -19,5 +19,6 @@ public abstract class ANTFrame extends JFrame {
    protected void fixComponentSizes(Component Part, Dimension Size) {
       Part.setMinimumSize(Size);
       Part.setMaximumSize(Size);
+      Part.setPreferredSize(Size);
    }
 }
