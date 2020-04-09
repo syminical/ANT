@@ -17,12 +17,13 @@ public class ANT_GUI {
    //private WindowBox MainBox, SettingsBox, InfoBox, DevBox;
    private ANTFrame MainFrame;
    private static DragListener DL;
-   private final Dimension MAIN_BOX_SIZE = new Dimension( 410, 438 ), SETTINGS_BOX_SIZE = new Dimension( 200, 300 ), INFO_BOX_SIZE = new Dimension( 350, 300 ), DEV_BOX_SIZE = new Dimension( 251, 75 );
-   private Image[] FrameAssets;
+   private final Dimension MAIN_BOX_SIZE = new Dimension( 410, 439 ), SETTINGS_BOX_SIZE = new Dimension( 200, 300 ), INFO_BOX_SIZE = new Dimension( 350, 300 ), DEV_BOX_SIZE = new Dimension( 251, 75 );
+   private Image[] FrameAssets, BodyAssets;
 
 
    public ANT_GUI() {
-      MainAssets = new Image[3];
+      FrameAssets = new Image[3];
+      BodyAssets = new Image[1];
       DL = new DragListener(this);
       
       //GC = new GameController(this);
@@ -40,6 +41,7 @@ public class ANT_GUI {
          FrameAssets[0] = ImageIO.read( new File("Images/UIexport/FRAME.png") );
          FrameAssets[1] = ImageIO.read( new File("Images/UIexport/icons/closeXButton/closeX.png") );
          FrameAssets[2] = ImageIO.read( new File("Images/UIexport/icons/closeXButton/closeXActive.png") );
+         BodyAssets[0] = ImageIO.read(new File("Images/UIexport/SPLASH.png"));
       } catch (Exception e) { return false; }
       return true;
    }
@@ -47,17 +49,30 @@ public class ANT_GUI {
    private void createWindows() {
       MainFrame = new ANTFrame() {
          public void setContentPane() {
-            this.setContentPane(new BackgroundPanel(MainAssets[0], BackgroundPanel.ACTUAL));
-            this.getContentPane().setBackground(new Color(0,0,255));
+            this.setContentPane(new BackgroundPanel(FrameAssets[0], BackgroundPanel.ACTUAL));
+            this.fixComponentSizes(this, MAIN_BOX_SIZE);
+            ((BackgroundPanel)(this.getContentPane())).setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
          }
          
          public void addComponents() {
             JPanel TitlePanel = new JPanel();
                this.fixComponentSizes(TitlePanel, new Dimension(410, 34));
                TitlePanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0));
-               TitlePanel.add(new MouseOverComponent(Arrays.copyOfRange(MainAssets, 1, 3)));
-               //TitlePanel.add(new AlphaContainer(new BackgroundPanel(MainAssets[1], BackgroundPanel.ACTUAL)));
+               TitlePanel.add(new MouseOverComponent(Arrays.copyOfRange(FrameAssets, 1, 3)));
+               TitlePanel.setBackground(new Color(0,0,255));
+               //TitlePanel.add(new AlphaContainer(new BackgroundPanel(FrameAssets[1], BackgroundPanel.ACTUAL)));
             ((BackgroundPanel)(this.getContentPane())).add(TitlePanel);
+            
+            JPanel BodyPanel = new JPanel();
+               this.fixComponentSizes(BodyPanel, new Dimension(405, 400));
+               BodyPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+               BodyPanel.add(Box.createRigidArea(new Dimension(2, 400)));
+               JPanel ContentPanel = new BackgroundPanel(BodyAssets[0], BackgroundPanel.ACTUAL);
+                  /*this.fixComponentSizes(ContentPanel, new Dimension(400, 400));
+                  ContentPanel.setOpaque(true);
+                  ContentPanel.setBackground(new Color(0,255,0));*/
+               BodyPanel.add(ContentPanel);
+            ((BackgroundPanel)(this.getContentPane())).add(BodyPanel);
          }
          
          public void style() {
