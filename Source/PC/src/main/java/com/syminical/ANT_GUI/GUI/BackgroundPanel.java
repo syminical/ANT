@@ -42,7 +42,7 @@ public class BackgroundPanel extends JPanel
 	public BackgroundPanel(Image image, int style)
 	{
                 this.setOpaque(false);
-                this.setBackground(new Color(0,0,0,0));
+                //this.setBackground(new Color(0,0,0,0));
 		setImage( image );
 		setStyle( style );
 		setLayout( new BorderLayout() );
