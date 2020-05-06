@@ -13,8 +13,8 @@ public class MouseOverComponent extends BackgroundPanel implements MouseListener
       super(__[0]);
       States = __;
       addMouseListener(this);
-      addMouseListener(ANT_GUI.getDL());
-      addMouseMotionListener(ANT_GUI.getDL());
+      addMouseListener(AntController.DL());
+      addMouseMotionListener(AntController.DL());
    }
    
    public void mouseEntered(MouseEvent ME) { setImage(States[ACTIVE]); }
