@@ -12,16 +12,9 @@ import java.awt.*;
 
 public class DragListener extends MouseInputAdapter
 {
-    private ANT_GUI Parent;
     private Point location;
     private MouseEvent pressed;
     private Component component;
-
-    public DragListener(ANT_GUI P) {
-        super();
-        
-        Parent = P;
-    }
 
     public void mouseClicked(MouseEvent E) {
         //if ( Parent != null ) Parent.mouseClicked(E);
@@ -42,14 +35,13 @@ public class DragListener extends MouseInputAdapter
         component.setLocation(x, y);
      }
 
+     public void mouseEntered( MouseEvent E ) {
+             //if ( Parent != null ) Parent.mouseEntered();
+     }
 
-	public void mouseEntered( MouseEvent E ) {
-		//if ( Parent != null ) Parent.mouseEntered();
-	}
-
-	public void mouseExited( MouseEvent E ) {
-		//if ( Parent != null ) Parent.mouseExited();
-	}
+     public void mouseExited( MouseEvent E ) {
+             //if ( Parent != null ) Parent.mouseExited();
+     }
     
     public void mouseMoved( MouseEvent E ) {
         //if ( Parent != null ) Parent.mouseMoved(E);
