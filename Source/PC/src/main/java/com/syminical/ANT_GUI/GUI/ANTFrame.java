@@ -3,9 +3,9 @@ package syminical.ant_gui;
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class ANTFrame extends JFrame {
-   public ANTFrame() {
-      super("ANT GUI TEST");
+public abstract class AntFrame extends JFrame {
+   public AntFrame(String __) {
+      super(__);
       setContentPane();
       addComponents();
       style();
@@ -16,7 +16,7 @@ public abstract class ANTFrame extends JFrame {
    public abstract void addComponents();
    public abstract void style();
    
-   protected void fixComponentSizes(Component Part, Dimension Size) {
+   public static void fixComponentSizes(Component Part, Dimension Size) {
       Part.setMinimumSize(Size);
       Part.setMaximumSize(Size);
       Part.setPreferredSize(Size);
