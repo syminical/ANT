@@ -6,18 +6,19 @@ import java.awt.image.*;
 import javax.swing.*;
 
 public class MouseOverComponent extends BackgroundPanel implements MouseListener {
-   private final int INACTIVE = 0, ACTIVE = 1;
-   private Image[] States;
+   protected static final int INACTIVE = 1, HOVER = 0;
+   protected boolean clicked = false;
+   protected Image[] States;
 
    public MouseOverComponent(Image[] __) {
-      super(__[0]);
+      super(__[INACTIVE]);
       States = __;
       addMouseListener(this);
-      addMouseListener(AntController.DL());
-      addMouseMotionListener(AntController.DL());
+      //addMouseListener(AntController.DL());
+      //addMouseMotionListener(AntController.DL());
    }
    
-   public void mouseEntered(MouseEvent ME) { setImage(States[ACTIVE]); }
+   public void mouseEntered(MouseEvent ME) { setImage(States[HOVER]); }
    public void mouseExited(MouseEvent ME) { setImage(States[INACTIVE]); }
    public void mouseClicked(MouseEvent ME) { }
    public void mousePressed(MouseEvent ME) { }
