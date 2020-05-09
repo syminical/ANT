@@ -24,6 +24,7 @@ public class ANT_GUI {
       View.setModel(Model);
       
       AntController.initWindowListener();
+      AntController.splashAnimation();
    }
    
    public static AntView View() { return View; }
