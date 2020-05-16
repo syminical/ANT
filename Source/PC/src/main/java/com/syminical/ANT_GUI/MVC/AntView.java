@@ -1,3 +1,20 @@
+//  Copyright (C) 2020 Alexandru Manaila.
+
+/*  This file is part of A.N.T.
+
+    A.N.T. is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License.
+
+    A.N.T. is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with A.N.T.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 package syminical.ant_gui;
 
 import java.awt.*;
@@ -92,8 +109,9 @@ public class AntView {
             Back.setOpaque(false);
             Back.add(new MouseOverComponent(NavBarAssets.next(2)) {
                @Override
-               public void mouseClicked(MouseEvent ME) { AntController.navBarBack(); }
+               public void mouseClicked(MouseEvent ME) { if (ME.getComponent().isVisible()) { AntController.navBarBack(); } }
             });
+            Back.setVisible(false);
             NavBar.add(Back);
          NoBack = new JPanel();
             AntFrame.fixComponentSizes(NoBack, new Dimension(58, 33));
@@ -105,9 +123,10 @@ public class AntView {
          ClearAll = new JPanel();
             AntFrame.fixComponentSizes(ClearAll, new Dimension(63, 33));
             ClearAll.setOpaque(false);
+            ClearAll.setVisible(false);
             ClearAll.add(new MouseOverComponent(NavBarAssets.next(2)) {
                @Override
-               public void mouseClicked(MouseEvent ME) { AntController.navBarClearAll(); }
+               public void mouseClicked(MouseEvent ME) { if (ME.getComponent().isVisible()) { AntController.navBarClearAll(); } }
             });
             NavBar.add(ClearAll);
          NoClearAll = new JPanel();
@@ -121,7 +140,8 @@ public class AntView {
             AntFrame.fixComponentSizes(NavTabs, new Dimension(132, 33));
             NavTabs.setLayout(new BoxLayout(NavTabs, BoxLayout.Y_AXIS));
             NavTabs.setOpaque(false);
-            NavTabs.add(new ButtonGroup() {
+            NavTabs.setVisible(false);
+            NavTabs.add(new ButtonGroup<NavBarTab>() {
                @Override
                public void createButtons() {
                   this.add(new NavBarTab(NavBarAssets.next(3)) {
