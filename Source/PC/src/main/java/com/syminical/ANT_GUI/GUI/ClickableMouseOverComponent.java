@@ -20,15 +20,25 @@ package syminical.ant_gui;
 import java.awt.Image;
 import java.awt.event.*;
 
-public class NavBarTab extends MouseOverComponent implements MouseListener {
+public class ClickableMouseOverComponent extends MouseOverComponent implements MouseListener {
    private final int ACTIVE = 2;
    
-   public NavBarTab(Image[] __) {
+   public ClickableMouseOverComponent(Image[] __) {
       super(__);
    }
    
    @Override
-   public void mouseClicked(MouseEvent ME) { ((ButtonGroup)(this.getParent())).reset(); clicked = true; setImage(States[ACTIVE]); }
+   public void mouseClicked(MouseEvent ME) {
+      if (this.getParent() instanceof ButtonGroup)
+         ((ButtonGroup)(this.getParent())).reset();
+      
+      clicked = !clicked;
+      
+      if (clicked)
+         setImage(States[ACTIVE]);
+      else
+         setImage(States[INACTIVE]);
+   }
    
    @Override
    public void mouseExited(MouseEvent ME) { setImage(States[(clicked)? ACTIVE : INACTIVE]); }
