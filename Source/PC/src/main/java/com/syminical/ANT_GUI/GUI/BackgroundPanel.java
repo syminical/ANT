@@ -46,6 +46,7 @@ public class BackgroundPanel extends JPanel
 		setImage( image );
 		setStyle( style );
 		setLayout( new BorderLayout() );
+                AntFrame.fixComponentSizes(this, new Dimension(image.getWidth(null), image.getHeight(null)));
 	}
 
 	/*
