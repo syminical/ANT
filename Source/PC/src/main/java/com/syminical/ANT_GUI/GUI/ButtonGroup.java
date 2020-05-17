@@ -18,10 +18,11 @@
 package syminical.ant_gui;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.JPanel;
 import java.util.LinkedList;
 
-public abstract class ButtonGroup<E> extends JPanel {
+public abstract class ButtonGroup<E extends JPanel & MouseListener> extends JPanel {
    private LinkedList<E> Buttons;
    private E Selected;
    
@@ -36,16 +37,18 @@ public abstract class ButtonGroup<E> extends JPanel {
    public abstract void createButtons();
    
    public void add(E __) {
-      super.add(__);
+      super.add((Component)__);
       Buttons.add(__);
    }
    
    public void selectFirst() { Buttons.getFirst().mouseClicked(null); }
    
    public void reset() {
-      for (E Bttn : Buttons) Bttn.reset();
+      for (E Bttn : Buttons)
+         if (Bttn instanceof ClickableMouseOverComponent)
+            ((ClickableMouseOverComponent)Bttn).reset();
    }
    
-   public void Select(int __) { Selected = __; }
+   //public void Select(int __) { Selected = __; }
    public E Selected() { return Selected; }
 }
