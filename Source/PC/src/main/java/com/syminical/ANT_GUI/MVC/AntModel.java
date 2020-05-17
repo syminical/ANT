@@ -36,7 +36,7 @@ public class AntModel {
       NavBarAssets = new ImageList();
       ConnectionAssets = new ImageList();
       
-      try {
+      try { //Inter-group order does not matter, Intra-group order does.
          FrameAssets.add(ImageIO.read( this.getClass().getResource("/assets/frame/SPLASH.png") ));
          FrameAssets.add(ImageIO.read( this.getClass().getResource("/assets/frame/FRAME.png") ));
          FrameAssets.add(ImageIO.read( this.getClass().getResource("/assets/frame/closeXButton/closeXActive.png") ));
@@ -61,14 +61,18 @@ public class AntModel {
          
          ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/ConOpTitle.png") ));
          ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/prefs/ConOpPrefTitle.png") ));
-         ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/prefs/notificationsList/NLactive.png") ));
+         ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/prefs/notificationsList/NLhover.png") ));
          ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/prefs/notificationsList/NLinactive.png") ));
-         ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/prefs/newNotifications/NNactive.png") ));
+         ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/prefs/notificationsList/NLactive.png") ));
+         ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/prefs/newNotifications/NNhover.png") ));
          ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/prefs/newNotifications/NNinactive.png") ));
-         ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/prefs/readTexts/RTactive.png") ));
+         ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/prefs/newNotifications/NNactive.png") ));
+         ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/prefs/readTexts/RThover.png") ));
          ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/prefs/readTexts/RTinactive.png") ));
-         ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/prefs/sendTexts/STactive.png") ));
+         ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/prefs/readTexts/RTactive.png") ));
+         ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/prefs/sendTexts/SThover.png") ));
          ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/prefs/sendTexts/STinactive.png") ));
+         ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/prefs/sendTexts/STactive.png") ));
          ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/connect/ConActive.png") ));
          ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/connect/ConInactive.png") ));
          ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/remove/RemActive.png") ));

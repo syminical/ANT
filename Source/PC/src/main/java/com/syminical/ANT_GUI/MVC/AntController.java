@@ -32,6 +32,13 @@ public class AntController {
    public static void navBarNotifs() { }
    public static void navBarTexts() { }
    
+   public static void connOpSetNotifList() { }
+   public static void connOpSetNewNotif() { }
+   public static void connOpSetReadTxts() { }
+   public static void connOpSetSendTxts() { }
+   public static void connOpGenerate() { }
+   public static void connOpDelete() { }
+   
    public static void initWindowListener() {
       DL = new DragListener();
          DL.setTarget(AntView.Window());

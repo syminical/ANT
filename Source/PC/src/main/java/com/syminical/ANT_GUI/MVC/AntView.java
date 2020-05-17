@@ -26,7 +26,7 @@ public class AntView {
    private static AntModel Model;
    private static AntFrame Window;
    private final Dimension WINDOW_SIZE = new Dimension( 410, 439 );
-   private static JPanel Body, Scene, NavBar, Back, NoBack, ClearAll, NoClearAll, NavTabs, Splash, RegisterOptions, RegisterScan, NotificationList, TextThreadList, TextThread, SettingsOptions, SettingsScan, About;
+   private static JPanel Body, Scene, NavBar, NoNavBar, Back, NoBack, ClearAll, NoClearAll, NavTabs, Splash, ConnectionOptions, ConnectionScan, NotificationList, TextThreadList, TextThread, SettingsOptions, SettingsScan, About;
    //private BackgroundPanel Splash;
    
    private void init() {
@@ -61,7 +61,11 @@ public class AntView {
                Scene.setLayout(new BoxLayout(Scene, BoxLayout.Y_AXIS));
                Scene.setOpaque(false);
                Scene.add(NavBar);
+               Scene.add(NoNavBar);
+               NavBar.setVisible(false);
                Scene.add(Splash);
+               Scene.add(ConnectionOptions);
+               //Scene.add(ConnectionScan);
             
             Body = new JPanel();
                AntFrame.fixComponentSizes(Body, new Dimension(410, 400));
@@ -90,15 +94,15 @@ public class AntView {
    }
    
    private void createScenes() {
-      RegisterOptions = new JPanel();
-      RegisterScan = new JPanel();
       NotificationList = new JPanel();
       TextThreadList = new JPanel();
       TextThread = new JPanel();
-      SettingsOptions = new JPanel();
-      SettingsScan = new JPanel();
       About = new JPanel();
       
+      NoNavBar = new JPanel();
+         AntFrame.fixComponentSizes(NoNavBar, new Dimension(1, 33));
+         NoNavBar.setOpaque(false);
+         
       NavBar = new JPanel();
          ImageList NavBarAssets = Model.getImageList(ModelData.NavBarAssets);
          AntFrame.fixComponentSizes(NavBar, new Dimension(400, 33));
@@ -141,29 +145,108 @@ public class AntView {
             NavTabs.setLayout(new BoxLayout(NavTabs, BoxLayout.Y_AXIS));
             NavTabs.setOpaque(false);
             NavTabs.setVisible(false);
-            NavTabs.add(new ButtonGroup<NavBarTab>() {
+            NavTabs.add(new ButtonGroup<ClickableMouseOverComponent>() {
                @Override
                public void createButtons() {
-                  this.add(new NavBarTab(NavBarAssets.next(3)) {
+                  this.add(new ClickableMouseOverComponent(NavBarAssets.next(3)) {
                      @Override
                      public void mouseClicked(MouseEvent ME) { super.mouseClicked(ME); AntController.navBarGear(); }
                   });
-                  this.add(new NavBarTab(NavBarAssets.next(3)) {
+                  this.add(new ClickableMouseOverComponent(NavBarAssets.next(3)) {
                      @Override
                      public void mouseClicked(MouseEvent ME) { super.mouseClicked(ME); AntController.navBarInfo(); }
                   });
-                  this.add(new NavBarTab(NavBarAssets.next(3)) {
+                  this.add(new ClickableMouseOverComponent(NavBarAssets.next(3)) {
                      @Override
                      public void mouseClicked(MouseEvent ME) { super.mouseClicked(ME); AntController.navBarNotifs(); }
                   });
-                  this.add(new NavBarTab(NavBarAssets.next(3)) {
+                  this.add(new ClickableMouseOverComponent(NavBarAssets.next(3)) {
                      @Override
                      public void mouseClicked(MouseEvent ME) { super.mouseClicked(ME); AntController.navBarTexts(); }
                   });
                   this.selectFirst();
                }
             });
-            NavBar.add(NavTabs);
+         NavBar.add(NavTabs);
+            
+      ConnectionOptions = new JPanel();
+         ImageList ConnectionAssets = Model.getImageList(ModelData.ConnectionAssets);
+         ConnectionOptions.setLayout(new BoxLayout(ConnectionOptions, BoxLayout.Y_AXIS));
+         AntFrame.fixComponentSizes(ConnectionOptions, new Dimension(400, 367));
+         ConnectionOptions.setOpaque(false);
+         
+         BackgroundPanel ConnOpTitle = new BackgroundPanel(ConnectionAssets.next(), BackgroundPanel.ACTUAL);
+            AntFrame.fixComponentSizes(ConnOpTitle, new Dimension(400, 47));
+         ConnectionOptions.add(ConnOpTitle);
+         
+         BackgroundPanel ConnOpSubTitle = new BackgroundPanel(ConnectionAssets.next(), BackgroundPanel.ACTUAL);
+            AntFrame.fixComponentSizes(ConnOpSubTitle, new Dimension(400, 75));
+         ConnectionOptions.add(ConnOpSubTitle);
+         
+         JPanel OptionsSpacer = new JPanel();
+            OptionsSpacer.setOpaque(false);
+            OptionsSpacer.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+            AntFrame.fixComponentSizes(OptionsSpacer, new Dimension(400, 104));
+            OptionsSpacer.add(Box.createRigidArea(new Dimension(94, 1)));
+            JPanel OptionsList = new JPanel();
+               //OptionsList.setLayout(new BoxLayout(OptionsList, BoxLayout.Y_AXIS));
+               OptionsList.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+               AntFrame.fixComponentSizes(OptionsList, new Dimension(212, 104));
+               OptionsList.setOpaque(false);
+               OptionsList.add(new ClickableMouseOverComponent(ConnectionAssets.next(3)) {
+                  @Override
+                  public void mouseClicked(MouseEvent ME) { super.mouseClicked(ME); AntController.connOpSetNotifList(); }
+               });
+               OptionsList.add(Box.createRigidArea(new Dimension(212, 20)));
+               OptionsList.add(new ClickableMouseOverComponent(ConnectionAssets.next(3)) {
+                  @Override
+                  public void mouseClicked(MouseEvent ME) { super.mouseClicked(ME); AntController.connOpSetNewNotif(); }
+               });
+               OptionsList.add(Box.createRigidArea(new Dimension(212, 20)));
+               OptionsList.add(new ClickableMouseOverComponent(ConnectionAssets.next(3)) {
+                  @Override
+                  public void mouseClicked(MouseEvent ME) { super.mouseClicked(ME); AntController.connOpSetReadTxts(); }
+               });
+               OptionsList.add(Box.createRigidArea(new Dimension(212, 20)));
+               OptionsList.add(new ClickableMouseOverComponent(ConnectionAssets.next(3)) {
+                  @Override
+                  public void mouseClicked(MouseEvent ME) { super.mouseClicked(ME); AntController.connOpSetSendTxts(); }
+               });
+            OptionsSpacer.add(OptionsList);
+         ConnectionOptions.add(OptionsSpacer);
+         
+         ConnectionOptions.add(Box.createRigidArea(new Dimension(1, 58)));
+         
+         JPanel GenerateSpacer = new JPanel();
+            GenerateSpacer.setOpaque(false);
+            GenerateSpacer.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+            AntFrame.fixComponentSizes(GenerateSpacer, new Dimension(400, 41));
+            GenerateSpacer.add(Box.createRigidArea(new Dimension(133, 1)));
+            GenerateSpacer.add(new MouseOverComponent(ConnectionAssets.next(2)) {
+               @Override
+               public void mouseClicked(MouseEvent ME) { if (ME.getComponent().isVisible()) { AntController.connOpGenerate(); } }
+            });
+         ConnectionOptions.add(GenerateSpacer);
+         
+         JPanel NoGenerate = new JPanel();
+            AntFrame.fixComponentSizes(NoGenerate, new Dimension(400, 41));
+            NoGenerate.setOpaque(false);
+            NoGenerate.setVisible(false);
+         ConnectionOptions.add(NoGenerate);
+         
+         ConnectionOptions.add(Box.createRigidArea(new Dimension(1, 17)));
+         
+         JPanel DeleteSpacer = new JPanel();
+            DeleteSpacer.setOpaque(false);
+            DeleteSpacer.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+            AntFrame.fixComponentSizes(DeleteSpacer, new Dimension(400, 8));
+            DeleteSpacer.add(Box.createRigidArea(new Dimension(177, 1)));
+            DeleteSpacer.add(new MouseOverComponent(ConnectionAssets.next(2)) {
+               @Override
+               public void mouseClicked(MouseEvent ME) { if (ME.getComponent().isVisible()) { AntController.connOpDelete(); } }
+            });
+         ConnectionOptions.add(DeleteSpacer);
+            
             
       Splash = new JPanel();
          AntFrame.fixComponentSizes(Splash, new Dimension(400, 400));
