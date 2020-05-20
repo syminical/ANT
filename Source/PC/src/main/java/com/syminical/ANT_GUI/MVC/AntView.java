@@ -65,6 +65,8 @@ public class AntView {
                NavBar.setVisible(false);
                Scene.add(Splash);
                Scene.add(ConnectionOptions);
+               ConnectionOptions.setVisible(false);
+               Scene.add(ConnectionScan);
                //Scene.add(ConnectionScan);
             
             Body = new JPanel();
@@ -168,9 +170,9 @@ public class AntView {
                }
             });
          NavBar.add(NavTabs);
-            
+         
+      ImageList ConnectionAssets = Model.getImageList(ModelData.ConnectionAssets);
       ConnectionOptions = new JPanel();
-         ImageList ConnectionAssets = Model.getImageList(ModelData.ConnectionAssets);
          ConnectionOptions.setLayout(new BoxLayout(ConnectionOptions, BoxLayout.Y_AXIS));
          AntFrame.fixComponentSizes(ConnectionOptions, new Dimension(400, 367));
          ConnectionOptions.setOpaque(false);
@@ -247,7 +249,13 @@ public class AntView {
             });
          ConnectionOptions.add(DeleteSpacer);
             
-            
+      ConnectionScan = new JPanel();
+         ConnectionScan.setLayout(new BoxLayout(ConnectionScan, BoxLayout.Y_AXIS));
+         AntFrame.fixComponentSizes(ConnectionScan, new Dimension(400, 316));
+         ConnectionScan.setOpaque(false);
+         ConnectionScan.add(new BackgroundPanel(ConnectionAssets.next(), BackgroundPanel.ACTUAL));
+         ConnectionScan.add(new BackgroundPanel(ConnectionAssets.next(), BackgroundPanel.ACTUAL));
+      
       Splash = new JPanel();
          AntFrame.fixComponentSizes(Splash, new Dimension(400, 400));
          Splash.setOpaque(false);
