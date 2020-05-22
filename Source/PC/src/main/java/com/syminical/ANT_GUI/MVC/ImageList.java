@@ -52,6 +52,19 @@ public class ImageList {
       } else return null;
    }
    
+   public Image get(int __) {
+      PicNode Temp = Head;
+      int i = 0;
+
+      while (i < __ && Temp != null) {
+         Temp = Temp.Next();
+         ++i;
+      }
+      
+      if (Temp != null) return Temp.Data();
+      return null;
+   }
+   
    private class PicNode {
       private PicNode Next;
       private Image Data;
