@@ -28,6 +28,7 @@ public class AntView {
    private final Dimension WINDOW_SIZE = new Dimension( 410, 439 );
    private static JPanel Body, Scene, NavBar, NoNavBar, Back, NoBack, ClearAll, NoClearAll, NavTabs, Splash, ConnectionOptions,
                   ConnectionScan, NotificationList, TextThreadList, TextThread, SettingsOptions, SettingsScan, About;
+   private static JTextArea License;
    //private BackgroundPanel Splash;
    
    private void init() {
@@ -262,13 +263,16 @@ public class AntView {
          About.setLayout(new BoxLayout(About, BoxLayout.Y_AXIS));
          AntFrame.fixComponentSizes(About, new Dimension(400, 367));
          About.setOpaque(false);
-         JTextArea License = new JTextArea(Model.getString(ModelData.License), 1, 1);
+         //JTextArea License = new JTextArea(Model.getString(ModelData.License), 1, 1);
+         License = new JTextArea(Model.getString(ModelData.License), 1, 1);
             //AntFrame.fixComponentSizes(License, new Dimension(33, 70));
-            License.setFont(new Font("Courier New Bold", Font.PLAIN, 9));
+            License.setFont(new Font("Courier New Bold", Font.PLAIN, 11));
             License.setEditable(false);
             License.setOpaque(false);
             License.setHighlighter(null);
             License.setForeground(Color.WHITE);
+            License.setLineWrap(true);
+            License.setWrapStyleWord(true);
          JScrollPane LicenseHolder = new JScrollPane(License);
             AntFrame.fixComponentSizes(LicenseHolder, new Dimension(400, 367));
             LicenseHolder.setVerticalScrollBar(new AntScrollBar(Model.getImageList(ModelData.MiscAssets).next(2)));
@@ -285,6 +289,10 @@ public class AntView {
          Splash.add(new BackgroundPanel(Model.getImageList(ModelData.FrameAssets).next(), BackgroundPanel.ACTUAL));
          //Splash.setBackground(new Color(255,127,0));
          Splash.setVisible(false);
+   }
+   
+   public static void saveLicense() {
+      Model.saveLicense(License.getText());
    }
    
    public static void splash() {

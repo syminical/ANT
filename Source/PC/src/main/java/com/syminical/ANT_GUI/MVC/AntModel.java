@@ -94,6 +94,14 @@ public class AntModel {
       return true;
    }
    
+   public void saveLicense(String __) {
+      try (
+         FileOutputStream LicenseSaveStream = new FileOutputStream(new File( this.getClass().getResource("/LICENSE").toURI() ));
+      ) {
+         LicenseSaveStream.write(__.getBytes());
+      } catch (Exception e) { }
+   }
+   
    public ImageList getImageList(ModelData __) {
       switch (__) {
          case FrameAssets: return FrameAssets;
