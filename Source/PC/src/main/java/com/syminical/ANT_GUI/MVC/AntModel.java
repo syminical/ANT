@@ -20,12 +20,14 @@ package syminical.ant_gui;
 import java.awt.Image;
 import java.io.*;
 import javax.imageio.*;
+import java.util.*;
+import java.util.stream.*;
 
 
 public class AntModel {
    private static AntModel Instance;
-   private ImageList FrameAssets, NavBarAssets, ConnectionAssets, NotifAssets;
-   private Image[] MiscAssets;
+   private ImageList FrameAssets, NavBarAssets, ConnectionAssets, NotifAssets, MiscAssets;
+   private String License;
    
    private void init() {
       loadAssets();
@@ -35,8 +37,11 @@ public class AntModel {
       FrameAssets = new ImageList();
       NavBarAssets = new ImageList();
       ConnectionAssets = new ImageList();
+      MiscAssets = new ImageList();
       
-      try { //Inter-group order does not matter, Intra-group order does.
+      try (
+         FileInputStream LicenseFileStream = new FileInputStream(new File( this.getClass().getResource("/LICENSE").toURI() ));
+      ) { //Inter-group order does not matter, Intra-group order does.
          FrameAssets.add(ImageIO.read( this.getClass().getResource("/assets/frame/SPLASH.png") ));
          FrameAssets.add(ImageIO.read( this.getClass().getResource("/assets/frame/FRAME.png") ));
          FrameAssets.add(ImageIO.read( this.getClass().getResource("/assets/frame/closeXButton/closeXActive.png") ));
@@ -79,8 +84,13 @@ public class AntModel {
          ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/options/remove/RemInactive.png") ));
          ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/scan/ScanTitle.png") ));
          ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/scan/QRCODE.png") ));
+         
+         byte[] LicenseBytes = new byte[LicenseFileStream.available()];
+         LicenseFileStream.read(LicenseBytes);
+         License = new String(LicenseBytes, "UTF-8");
+         MiscAssets.add(ImageIO.read( this.getClass().getResource("/assets/misc/scrollbar/SBactive.png") ));
+         MiscAssets.add(ImageIO.read( this.getClass().getResource("/assets/misc/scrollbar/SBinactive.png") ));
       } catch (Exception e) { e.printStackTrace(); return false; }
-      
       return true;
    }
    
@@ -89,6 +99,14 @@ public class AntModel {
          case FrameAssets: return FrameAssets;
          case ConnectionAssets: return ConnectionAssets;
          case NavBarAssets: return NavBarAssets;
+         case MiscAssets: return MiscAssets;
+         default: return null;
+      }
+   }
+   
+   public String getString(ModelData __) {
+      switch (__) {
+         case License: return License;
          default: return null;
       }
    }
