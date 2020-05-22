@@ -26,7 +26,8 @@ public class AntView {
    private static AntModel Model;
    private static AntFrame Window;
    private final Dimension WINDOW_SIZE = new Dimension( 410, 439 );
-   private static JPanel Body, Scene, NavBar, NoNavBar, Back, NoBack, ClearAll, NoClearAll, NavTabs, Splash, ConnectionOptions, ConnectionScan, NotificationList, TextThreadList, TextThread, SettingsOptions, SettingsScan, About;
+   private static JPanel Body, Scene, NavBar, NoNavBar, Back, NoBack, ClearAll, NoClearAll, NavTabs, Splash, ConnectionOptions,
+                  ConnectionScan, NotificationList, TextThreadList, TextThread, SettingsOptions, SettingsScan, About;
    //private BackgroundPanel Splash;
    
    private void init() {
@@ -62,12 +63,14 @@ public class AntView {
                Scene.setOpaque(false);
                Scene.add(NavBar);
                Scene.add(NoNavBar);
-               NavBar.setVisible(false);
+               NoNavBar.setVisible(false);
                Scene.add(Splash);
                Scene.add(ConnectionOptions);
                ConnectionOptions.setVisible(false);
                Scene.add(ConnectionScan);
+               ConnectionScan.setVisible(false);
                //Scene.add(ConnectionScan);
+               Scene.add(About);
             
             Body = new JPanel();
                AntFrame.fixComponentSizes(Body, new Dimension(410, 400));
@@ -123,7 +126,7 @@ public class AntView {
             AntFrame.fixComponentSizes(NoBack, new Dimension(58, 33));
             NoBack.setOpaque(false);
             NoBack.add(Box.createRigidArea(new Dimension(58, 29)));
-            NoBack.setVisible(false);
+            //NoBack.setVisible(false);
             NavBar.add(NoBack);
          NavBar.add(Box.createRigidArea(new Dimension(108, 1)));
          ClearAll = new JPanel();
@@ -139,14 +142,13 @@ public class AntView {
             AntFrame.fixComponentSizes(NoClearAll, new Dimension(63, 33));
             NoClearAll.setOpaque(false);
             NoClearAll.add(Box.createRigidArea(new Dimension(63, 22)));
-            NoClearAll.setVisible(false);
+            //NoClearAll.setVisible(false);
             NavBar.add(NoClearAll);
          NavBar.add(Box.createRigidArea(new Dimension(39, 1)));
          NavTabs = new JPanel();
             AntFrame.fixComponentSizes(NavTabs, new Dimension(132, 33));
             NavTabs.setLayout(new BoxLayout(NavTabs, BoxLayout.Y_AXIS));
             NavTabs.setOpaque(false);
-            NavTabs.setVisible(false);
             NavTabs.add(new ButtonGroup<ClickableMouseOverComponent>() {
                @Override
                public void createButtons() {
@@ -256,6 +258,26 @@ public class AntView {
          ConnectionScan.add(new BackgroundPanel(ConnectionAssets.next(), BackgroundPanel.ACTUAL));
          ConnectionScan.add(new BackgroundPanel(ConnectionAssets.next(), BackgroundPanel.ACTUAL));
       
+      About = new JPanel();
+         About.setLayout(new BoxLayout(About, BoxLayout.Y_AXIS));
+         AntFrame.fixComponentSizes(About, new Dimension(400, 367));
+         About.setOpaque(false);
+         JTextArea License = new JTextArea(Model.getString(ModelData.License), 1, 1);
+            //AntFrame.fixComponentSizes(License, new Dimension(33, 70));
+            License.setFont(new Font("Courier New Bold", Font.PLAIN, 9));
+            License.setEditable(false);
+            License.setOpaque(false);
+            License.setHighlighter(null);
+            License.setForeground(Color.WHITE);
+         JScrollPane LicenseHolder = new JScrollPane(License);
+            AntFrame.fixComponentSizes(LicenseHolder, new Dimension(400, 367));
+            LicenseHolder.setVerticalScrollBar(new AntScrollBar(Model.getImageList(ModelData.MiscAssets).next(2)));
+            LicenseHolder.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            LicenseHolder.setOpaque(false);
+            LicenseHolder.getViewport().setOpaque(false);
+            LicenseHolder.setBorder(javax.swing.BorderFactory.createEmptyBorder(6,6,6,6));
+         About.add(LicenseHolder);
+         
       Splash = new JPanel();
          AntFrame.fixComponentSizes(Splash, new Dimension(400, 400));
          Splash.setOpaque(false);
