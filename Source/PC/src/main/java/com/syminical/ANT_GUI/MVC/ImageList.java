@@ -25,6 +25,8 @@ public class ImageList {
    
    public ImageList() { Head = null; Last = null; Next = null; size = 0; itr = 0; }
    
+   private ImageList(PicNode h, PicNode l, int n) { Head = h; Last = l; Next = h; size = n; itr = 0; }
+   
    public void add(Image __) {      
       if (Head == null) {
          Head = new PicNode(__);
@@ -62,6 +64,19 @@ public class ImageList {
       }
       
       if (Temp != null) return Temp.Data();
+      return null;
+   }
+   
+   public ImageList tailList(int __) {
+      PicNode Temp = Head;
+      int i = 0;
+      
+      while (i < __ && Temp != null) {
+         Temp = Temp.Next();
+         ++i;
+      }
+      
+      if (Temp != null) return new ImageList(Temp, Last, size-i);
       return null;
    }
    
