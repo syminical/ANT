@@ -26,7 +26,7 @@ import java.util.stream.*;
 
 public class AntModel {
    private static AntModel Instance;
-   private ImageList FrameAssets, NavBarAssets, ConnectionAssets, NotifAssets, MiscAssets;
+   private ImageList FrameAssets, NavBarAssets, ConnectionAssets, NotificationAssets, MiscAssets;
    private String License;
    
    private void init() {
@@ -37,6 +37,7 @@ public class AntModel {
       FrameAssets = new ImageList();
       NavBarAssets = new ImageList();
       ConnectionAssets = new ImageList();
+      NotificationAssets = new ImageList();
       MiscAssets = new ImageList();
       
       try (
@@ -85,6 +86,15 @@ public class AntModel {
          ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/scan/ScanTitle.png") ));
          ConnectionAssets.add(ImageIO.read( this.getClass().getResource("/assets/connection/scan/QRCODE.png") ));
          
+         NotificationAssets.add(ImageIO.read( this.getClass().getResource("/assets/notif/nothingToShow.png") ));
+         NotificationAssets.add(ImageIO.read( this.getClass().getResource("/assets/notif/notifCard/SmallActive.png") ));
+         NotificationAssets.add(ImageIO.read( this.getClass().getResource("/assets/notif/notifCard/SmallInactive.png") ));
+         NotificationAssets.add(ImageIO.read( this.getClass().getResource("/assets/notif/notifCard/BigActive.png") ));
+         NotificationAssets.add(ImageIO.read( this.getClass().getResource("/assets/notif/notifCard/BigInactive.png") ));
+         NotificationAssets.add(ImageIO.read( this.getClass().getResource("/assets/notif/notifCard/NCcloseX/NCXactive.png") ));
+         NotificationAssets.add(ImageIO.read( this.getClass().getResource("/assets/notif/notifCard/NCcloseX/NCXinactive.png") ));
+         
+         
          byte[] LicenseBytes = new byte[LicenseFileStream.available()];
          LicenseFileStream.read(LicenseBytes);
          License = new String(LicenseBytes, "UTF-8");
@@ -107,6 +117,7 @@ public class AntModel {
          case FrameAssets: return FrameAssets;
          case ConnectionAssets: return ConnectionAssets;
          case NavBarAssets: return NavBarAssets;
+         case NotificationAssets: return NotificationAssets;
          case MiscAssets: return MiscAssets;
          default: return null;
       }

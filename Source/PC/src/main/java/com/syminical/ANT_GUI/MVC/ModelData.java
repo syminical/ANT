@@ -19,7 +19,9 @@ package syminical.ant_gui;
 
 public enum ModelData {
 //IMAGES
-   FrameAssets, NavBarAssets, ConnectionAssets, MiscAssets, License;
+   FrameAssets, NavBarAssets, ConnectionAssets, NotificationAssets, MiscAssets, 
+//TEXT
+   License;
    
    /*private final int id;
    private ModelData(int __) { this.id = __; }
