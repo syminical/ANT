@@ -27,13 +27,15 @@ public class AntView {
    private static AntFrame Window;
    private final Dimension WINDOW_SIZE = new Dimension( 410, 439 );
    private static JPanel Body, Scene, NavBar, NoNavBar, Back, NoBack, ClearAll, NoClearAll, NavTabs, Splash, ConnectionOptions,
-                  ConnectionScan, NotificationList, TextThreadList, TextThread, SettingsOptions, SettingsScan, About;
+                  ConnectionScan, Notifications, NotificationList, TextThreadList, TextThread, SettingsOptions, SettingsScan, About;
    private static JTextArea License;
    //private BackgroundPanel Splash;
    
    private void init() {
       createScenes();
       createWindow();
+      addNotification(0, "one");
+      addNotification(1, "two");
    }
    
    private void createWindow() {
@@ -62,15 +64,12 @@ public class AntView {
                AntFrame.fixComponentSizes(Scene, new Dimension(400, 400));
                Scene.setLayout(new BoxLayout(Scene, BoxLayout.Y_AXIS));
                Scene.setOpaque(false);
+               Scene.add(Splash);
                Scene.add(NavBar);
                Scene.add(NoNavBar);
-               NoNavBar.setVisible(false);
-               Scene.add(Splash);
                Scene.add(ConnectionOptions);
-               ConnectionOptions.setVisible(false);
                Scene.add(ConnectionScan);
-               ConnectionScan.setVisible(false);
-               //Scene.add(ConnectionScan);
+               Scene.add(Notifications);
                Scene.add(About);
             
             Body = new JPanel();
@@ -100,20 +99,20 @@ public class AntView {
    }
    
    private void createScenes() {
-      NotificationList = new JPanel();
       TextThreadList = new JPanel();
       TextThread = new JPanel();
-      About = new JPanel();
       
       NoNavBar = new JPanel();
          AntFrame.fixComponentSizes(NoNavBar, new Dimension(1, 33));
          NoNavBar.setOpaque(false);
+         NoNavBar.setVisible(false);
          
       NavBar = new JPanel();
          ImageList NavBarAssets = Model.getImageList(ModelData.NavBarAssets);
          AntFrame.fixComponentSizes(NavBar, new Dimension(400, 33));
          NavBar.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
          NavBar.setOpaque(false);
+         //NavBar.setVisible(false);
          Back = new JPanel();
             AntFrame.fixComponentSizes(Back, new Dimension(58, 33));
             Back.setOpaque(false);
@@ -133,7 +132,7 @@ public class AntView {
          ClearAll = new JPanel();
             AntFrame.fixComponentSizes(ClearAll, new Dimension(63, 33));
             ClearAll.setOpaque(false);
-            ClearAll.setVisible(false);
+            //ClearAll.setVisible(false);
             ClearAll.add(new MouseOverComponent(NavBarAssets.next(2)) {
                @Override
                public void mouseClicked(MouseEvent ME) { if (ME.getComponent().isVisible()) { AntController.navBarClearAll(); } }
@@ -143,7 +142,7 @@ public class AntView {
             AntFrame.fixComponentSizes(NoClearAll, new Dimension(63, 33));
             NoClearAll.setOpaque(false);
             NoClearAll.add(Box.createRigidArea(new Dimension(63, 22)));
-            //NoClearAll.setVisible(false);
+            NoClearAll.setVisible(false);
             NavBar.add(NoClearAll);
          NavBar.add(Box.createRigidArea(new Dimension(39, 1)));
          NavTabs = new JPanel();
@@ -179,6 +178,7 @@ public class AntView {
          ConnectionOptions.setLayout(new BoxLayout(ConnectionOptions, BoxLayout.Y_AXIS));
          AntFrame.fixComponentSizes(ConnectionOptions, new Dimension(400, 367));
          ConnectionOptions.setOpaque(false);
+         ConnectionOptions.setVisible(false);
          
          BackgroundPanel ConnOpTitle = new BackgroundPanel(ConnectionAssets.next(), BackgroundPanel.ACTUAL);
             AntFrame.fixComponentSizes(ConnOpTitle, new Dimension(400, 47));
@@ -256,13 +256,38 @@ public class AntView {
          ConnectionScan.setLayout(new BoxLayout(ConnectionScan, BoxLayout.Y_AXIS));
          AntFrame.fixComponentSizes(ConnectionScan, new Dimension(400, 316));
          ConnectionScan.setOpaque(false);
+         ConnectionScan.setVisible(false);
          ConnectionScan.add(new BackgroundPanel(ConnectionAssets.next(), BackgroundPanel.ACTUAL));
          ConnectionScan.add(new BackgroundPanel(ConnectionAssets.next(), BackgroundPanel.ACTUAL));
+         
+      Notifications = new JPanel();
+         Notifications.setLayout(new BoxLayout(Notifications, BoxLayout.Y_AXIS));
+         AntFrame.fixComponentSizes(Notifications, new Dimension(400, 367));
+         Notifications.setOpaque(false);
+         //Notifications.setVisible(false);
+         NotificationList = new JPanel();
+            NotificationList.setLayout(new BoxLayout(NotificationList, BoxLayout.Y_AXIS));
+            AntFrame.fixComponentSizes(NotificationList, new Dimension(396, 367));
+            NotificationList.setOpaque(false);
+            //NotificationList.setBackground(new Color(255, 255, 0));
+            //NotificationList.add(Box.createRigidArea(new Dimension(10, 10)));
+         JScrollPane NotificationListHolder = new JScrollPane(NotificationList);
+            //AntFrame.fixComponentSizes(NotificationListHolder, new Dimension(400, 367));
+            NotificationListHolder.setVerticalScrollBar(new AntScrollBar(Model.getImageList(ModelData.MiscAssets).tailList(0).next(2)));
+            NotificationListHolder.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            NotificationListHolder.setOpaque(false);
+            NotificationListHolder.getViewport().setOpaque(false);
+            NotificationListHolder.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+            //NotificationListHolder.setBackground(new Color(255, 0, 255));
+            //NotificationListHolder.getViewport().setBackground(new Color(0,255,0));
+            //NotificationListHolder.setBorder(javax.swing.BorderFactory.createEmptyBorder(6,6,6,6));
+         Notifications.add(NotificationListHolder, BorderLayout.CENTER);
       
       About = new JPanel();
          About.setLayout(new BoxLayout(About, BoxLayout.Y_AXIS));
          AntFrame.fixComponentSizes(About, new Dimension(400, 367));
          About.setOpaque(false);
+         About.setVisible(false);
          //JTextArea License = new JTextArea(Model.getString(ModelData.License), 1, 1);
          License = new JTextArea(Model.getString(ModelData.License), 1, 1);
             //AntFrame.fixComponentSizes(License, new Dimension(33, 70));
@@ -275,7 +300,7 @@ public class AntView {
             License.setWrapStyleWord(true);
          JScrollPane LicenseHolder = new JScrollPane(License);
             AntFrame.fixComponentSizes(LicenseHolder, new Dimension(400, 367));
-            LicenseHolder.setVerticalScrollBar(new AntScrollBar(Model.getImageList(ModelData.MiscAssets).next(2)));
+            LicenseHolder.setVerticalScrollBar(new AntScrollBar(Model.getImageList(ModelData.MiscAssets).tailList(0).next(2)));
             LicenseHolder.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
             LicenseHolder.setOpaque(false);
             LicenseHolder.getViewport().setOpaque(false);
@@ -285,10 +310,29 @@ public class AntView {
       Splash = new JPanel();
          AntFrame.fixComponentSizes(Splash, new Dimension(400, 400));
          Splash.setOpaque(false);
+         Splash.setVisible(false);
          //Splash.setLayout(new BoxLayout(Splash, BoxLayout.Y_AXIS));
          Splash.add(new BackgroundPanel(Model.getImageList(ModelData.FrameAssets).next(), BackgroundPanel.ACTUAL));
-         //Splash.setBackground(new Color(255,127,0));
-         Splash.setVisible(false);
+   }
+   
+   public void addNotification(int id, String Text) {
+      JPanel __ = new JPanel();
+         __.setOpaque(false);
+         __.setLayout(new BoxLayout(__, BoxLayout.Y_AXIS));
+         AntFrame.fixComponentSizes(__, new Dimension(314, 61));
+         __.add(Box.createRigidArea(new Dimension(314, 10)));//286
+         __.add(new NotificationCard(Model.getImageList(ModelData.NotificationAssets).tailList(1).next(6), id, Text));
+      NotificationList.add(__);
+   }
+   
+   public void removeNotification(int __) {
+      NotificationList.remove(__);
+      NotificationList.repaint();
+   }
+   
+   public void removeAllNotifications() {
+      NotificationList.removeAll();
+      NotificationList.repaint();
    }
    
    public static void saveLicense() {
@@ -296,17 +340,17 @@ public class AntView {
    }
    
    public static void splash() {
-      if (Window != null) {
+      /*if (Window != null) {
          NavBar.setVisible(false);
          Splash.setVisible(true);
-      }
+      }*/
    }
    
    public static void notifs() {
-      if (Window != null) {
+      /*if (Window != null) {
          Splash.setVisible(false);
          NavBar.setVisible(true);
-      }
+      }*/
    }
    
    public void setModel(AntModel __) {
