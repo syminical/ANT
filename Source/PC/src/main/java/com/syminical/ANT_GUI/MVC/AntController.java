@@ -26,7 +26,7 @@ public class AntController {
    }
    
    public static void navBarBack() { }
-   public static void navBarClearAll() { }
+   public static void navBarClearAll() { ANT_GUI.View().removeAllNotifications(); }
    public static void navBarGear() { }
    public static void navBarInfo() { }
    public static void navBarNotifs() { }
@@ -38,6 +38,8 @@ public class AntController {
    public static void connOpSetSendTxts() { }
    public static void connOpGenerate() { }
    public static void connOpDelete() { }
+   
+   public static void notificationCardClose(int __) { ANT_GUI.View().removeNotification(__); }
    
    public static void initWindowListener() {
       DL = new DragListener();
