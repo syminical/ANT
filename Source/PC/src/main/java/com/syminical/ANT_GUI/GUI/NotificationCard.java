@@ -44,7 +44,7 @@ public class NotificationCard extends BackgroundPanel implements MouseListener {
          Top.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
          AntFrame.fixComponentSizes(Top, new Dimension(286, 18));
          Top.setOpaque(false);
-         TopText = new JLabel(" Tinder - 2h");
+         TopText = new JLabel(" Tinder - 2h   > "+Text);
             AntFrame.fixComponentSizes(TopText, new Dimension(263, 18));
             //TopText.setOpaque(true);
             //TopText.setBackground(new Color(255, 0, 0));
