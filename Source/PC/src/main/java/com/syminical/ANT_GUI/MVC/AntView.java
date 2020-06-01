@@ -335,14 +335,16 @@ public class AntView {
       NotificationList.add(__);
    }
    
-   public void removeNotification(int __) {
+   public void removeNotification(Component __) {
       NotificationList.remove(__);
       NotificationList.revalidate();
+      NotificationList.repaint();
    }
    
    public void removeAllNotifications() {
       NotificationList.removeAll();
-      NotificationListHolder.repaint();
+      NotificationList.revalidate();
+      NotificationList.repaint();
    }
    
    public static void saveLicense() {

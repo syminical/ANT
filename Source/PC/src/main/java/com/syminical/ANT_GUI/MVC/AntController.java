@@ -17,6 +17,8 @@
 
 package syminical.ant_gui;
 
+import java.awt.*;
+
 public class AntController {
    private static DragListener DL;
 
@@ -39,7 +41,7 @@ public class AntController {
    public static void connOpGenerate() { }
    public static void connOpDelete() { }
    
-   public static void notificationCardClose(int __) { ANT_GUI.View().removeNotification(__); }
+   public static void notificationCardClose(Component __) { ANT_GUI.View().removeNotification(__); }
    
    public static void initWindowListener() {
       DL = new DragListener();

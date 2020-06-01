@@ -55,8 +55,7 @@ public class NotificationCard extends BackgroundPanel implements MouseListener {
             @Override
             public void mouseClicked(MouseEvent ME) { 
                Object Temp = ME.getComponent().getParent().getParent();
-               if (Temp instanceof NotificationCard) {System.out.println("hAHa");
-                  ((NotificationCard)Temp).close();}
+               if (Temp instanceof NotificationCard) ((NotificationCard)Temp).close();
             }
          });
       this.add(Top);
@@ -103,5 +102,5 @@ public class NotificationCard extends BackgroundPanel implements MouseListener {
    public void mousePressed(MouseEvent ME) { }
    public void mouseReleased(MouseEvent ME) { }
    
-   public void close() { AntController.notificationCardClose(id); }
+   public void close() { AntController.notificationCardClose(this.getParent()); }
 }
