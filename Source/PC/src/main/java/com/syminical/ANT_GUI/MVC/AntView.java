@@ -29,6 +29,7 @@ public class AntView {
    private static JPanel Body, Scene, NavBar, NoNavBar, Back, NoBack, ClearAll, NoClearAll, NavTabs, Splash, ConnectionOptions,
                   ConnectionScan, Notifications, NotificationList, TextThreadList, TextThread, SettingsOptions, SettingsScan, About;
    private static JTextArea License;
+   private JScrollPane NotificationListHolder;
    //private BackgroundPanel Splash;
    
    private void init() {
@@ -36,6 +37,13 @@ public class AntView {
       createWindow();
       addNotification(0, "one");
       addNotification(1, "two");
+      addNotification(2, "three");
+      addNotification(3, "four");
+      addNotification(4, "five");
+      addNotification(5, "six");
+      addNotification(6, "seven");
+      addNotification(7, "eight");
+      addNotification(8, "nine");
    }
    
    private void createWindow() {
@@ -267,17 +275,19 @@ public class AntView {
          //Notifications.setVisible(false);
          NotificationList = new JPanel();
             NotificationList.setLayout(new BoxLayout(NotificationList, BoxLayout.Y_AXIS));
-            AntFrame.fixComponentSizes(NotificationList, new Dimension(396, 367));
+            //NotificationList.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 0));
+            //AntFrame.fixComponentSizes(NotificationList, new Dimension(390, 356));
             NotificationList.setOpaque(false);
             //NotificationList.setBackground(new Color(255, 255, 0));
             //NotificationList.add(Box.createRigidArea(new Dimension(10, 10)));
-         JScrollPane NotificationListHolder = new JScrollPane(NotificationList);
-            //AntFrame.fixComponentSizes(NotificationListHolder, new Dimension(400, 367));
+         NotificationListHolder = new JScrollPane(NotificationList);
+            AntFrame.fixComponentSizes(NotificationListHolder, new Dimension(400, 367));
             NotificationListHolder.setVerticalScrollBar(new AntScrollBar(Model.getImageList(ModelData.MiscAssets).tailList(0).next(2)));
             NotificationListHolder.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+            NotificationListHolder.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
             NotificationListHolder.setOpaque(false);
             NotificationListHolder.getViewport().setOpaque(false);
-            NotificationListHolder.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
+            NotificationListHolder.setBorder(javax.swing.BorderFactory.createEmptyBorder(6,0,6,6));
             //NotificationListHolder.setBackground(new Color(255, 0, 255));
             //NotificationListHolder.getViewport().setBackground(new Color(0,255,0));
             //NotificationListHolder.setBorder(javax.swing.BorderFactory.createEmptyBorder(6,6,6,6));
@@ -319,20 +329,20 @@ public class AntView {
       JPanel __ = new JPanel();
          __.setOpaque(false);
          __.setLayout(new BoxLayout(__, BoxLayout.Y_AXIS));
-         AntFrame.fixComponentSizes(__, new Dimension(314, 61));
-         __.add(Box.createRigidArea(new Dimension(314, 10)));//286
+         AntFrame.fixComponentSizes(__, new Dimension(314, 60));
+         __.add(Box.createRigidArea(new Dimension(314, 9)));//286
          __.add(new NotificationCard(Model.getImageList(ModelData.NotificationAssets).tailList(1).next(6), id, Text));
       NotificationList.add(__);
    }
    
    public void removeNotification(int __) {
       NotificationList.remove(__);
-      NotificationList.repaint();
+      NotificationList.revalidate();
    }
    
    public void removeAllNotifications() {
       NotificationList.removeAll();
-      NotificationList.repaint();
+      NotificationListHolder.repaint();
    }
    
    public static void saveLicense() {
