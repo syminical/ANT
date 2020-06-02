@@ -17,4 +17,4 @@
 
 package syminical.ant_gui;
 
-public enum ViewState { Splash, RegisterOptions, RegisterScan, NotificationList, TextThreadList, TextThread, SettingsOptions, SettingsScan, About }
+public enum ViewState { Splash, ConnectionOptions, ConnectionScan, Notifications, TextThreadList, TextThread, About }
