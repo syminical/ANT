@@ -22,11 +22,15 @@ import java.io.*;
 import javax.imageio.*;
 import java.util.*;
 import java.util.stream.*;
+import javax.swing.*;
 
 
 public class AntModel {
    private static AntModel Instance;
    private ImageList FrameAssets, NavBarAssets, ConnectionAssets, NotificationAssets, MiscAssets;
+   private boolean connected;
+   private ViewState CurrentViewState;
+   private JPanel CurrentScene;
    private String License;
    
    private void init() {
@@ -133,6 +137,13 @@ public class AntModel {
    public Image getImage(ModelData __) {
       return null;
    }
+   
+   public boolean getConnected() { return connected; }
+   public ViewState getCurrentViewState() { return CurrentViewState; }
+   public JPanel getCurrentScene() { return CurrentScene; }
+   public void setConnected(boolean __) { connected = __; }
+   public void setCurrentViewState(ViewState __) { CurrentViewState = __; }
+   public void setCurrentScene(JPanel __) { CurrentScene = __; }
    
    public static AntModel getInstance() {
       if (Instance != null) return Instance;

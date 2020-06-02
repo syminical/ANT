@@ -18,45 +18,53 @@
 package syminical.ant_gui;
 
 import java.awt.*;
+import javax.swing.*;
 
 public class AntController {
    private static DragListener DL;
+   private static AntModel Model;
+   private static AntView View;
 
    public static void frameCloseX() {
-      if (ANT_GUI.View() != null) ANT_GUI.View().kill();
+      if (View != null) View.kill();
       System.exit(0);
    }
    
-   public static void navBarBack() { }
-   public static void navBarClearAll() { ANT_GUI.View().removeAllNotifications(); }
-   public static void navBarGear() { }
-   public static void navBarInfo() { }
-   public static void navBarNotifs() { }
-   public static void navBarTexts() { }
+   public static void navBarClearAll() { if (Model.getCurrentViewState() == ViewState.Notifications) ANT_GUI.View().removeAllNotifications(); else connEstablished(); }
+   public static void navBarGear() { View.setScene(ViewState.ConnectionOptions); }
+   public static void navBarInfo() { View.setScene(ViewState.About); }
+   public static void navBarNotifs() { View.setScene(ViewState.Notifications); }
+   public static void navBarTexts() { View.setScene(ViewState.TextThreadList); }
+   public static void navBarBack() {
+      if (Model.getCurrentViewState() == ViewState.ConnectionScan)
+         View.setScene(ViewState.ConnectionOptions);
+      else View.setScene(ViewState.TextThreadList);
+   }
    
    public static void connOpSetNotifList() { }
    public static void connOpSetNewNotif() { }
    public static void connOpSetReadTxts() { }
    public static void connOpSetSendTxts() { }
-   public static void connOpGenerate() { }
-   public static void connOpDelete() { }
+   public static void connOpGenerate() { View.setScene(ViewState.ConnectionScan); }
+   public static void connOpDelete() { View.setScene(ViewState.ConnectionOptions); }
+   public static void connEstablished() { View.setScene(ViewState.Notifications); }
    
    public static void notificationCardClose(Component __) { ANT_GUI.View().removeNotification(__); }
    
    public static void initWindowListener() {
       DL = new DragListener();
-         DL.setTarget(AntView.Window());
-         AntView.Window().addMouseListener(DL);
-         AntView.Window().addMouseMotionListener(DL);
+         DL.setTarget(View.Window());
+         View.Window().addMouseListener(DL);
+         View.Window().addMouseMotionListener(DL);
    }
    
    public static void splashAnimation() {
       try {
-         AntView.splash();
          Thread.sleep(4000);
-         AntView.notifs();
+         View.setScene(ViewState.ConnectionOptions);
       } catch(Exception e) { System.out.println("splash animation failed"); }
    }
    
+   public static void link(AntModel M, AntView V) { Model = M; View = V; }
    public static DragListener DL() { return DL; }
 }

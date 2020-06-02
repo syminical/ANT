@@ -26,14 +26,19 @@ public class AntView {
    private static AntModel Model;
    private static AntFrame Window;
    private final Dimension WINDOW_SIZE = new Dimension( 410, 439 );
-   private static JPanel Body, Scene, NavBar, NoNavBar, Back, NoBack, ClearAll, NoClearAll, NavTabs, Splash, ConnectionOptions,
-                  ConnectionScan, Notifications, NotificationList, TextThreadList, TextThread, SettingsOptions, SettingsScan, About;
+   private static JPanel Body, Scene, NavBar, NoNavBar, Back, NoBack, ClearAll, NoClearAll, NavTabs, NotificationList;
+   //below are the scenes available for Scene.
+   private static JPanel Splash, ConnectionOptions, ConnectionScan, Notifications, TextThreadList, TextThread, About;
+   private JPanel CurrentScene;
    private static JTextArea License;
    private JScrollPane NotificationListHolder;
    //private BackgroundPanel Splash;
    
    private void init() {
       createScenes();
+         Model.setConnected(false);
+         Model.setCurrentViewState(ViewState.Splash);
+         Model.setCurrentScene(Splash);
       createWindow();
       addNotification(0, "one");
       addNotification(1, "two");
@@ -120,7 +125,7 @@ public class AntView {
          AntFrame.fixComponentSizes(NavBar, new Dimension(400, 33));
          NavBar.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
          NavBar.setOpaque(false);
-         //NavBar.setVisible(false);
+         NavBar.setVisible(false);
          Back = new JPanel();
             AntFrame.fixComponentSizes(Back, new Dimension(58, 33));
             Back.setOpaque(false);
@@ -140,7 +145,7 @@ public class AntView {
          ClearAll = new JPanel();
             AntFrame.fixComponentSizes(ClearAll, new Dimension(63, 33));
             ClearAll.setOpaque(false);
-            //ClearAll.setVisible(false);
+            ClearAll.setVisible(false);
             ClearAll.add(new MouseOverComponent(NavBarAssets.next(2)) {
                @Override
                public void mouseClicked(MouseEvent ME) { if (ME.getComponent().isVisible()) { AntController.navBarClearAll(); } }
@@ -150,7 +155,7 @@ public class AntView {
             AntFrame.fixComponentSizes(NoClearAll, new Dimension(63, 33));
             NoClearAll.setOpaque(false);
             NoClearAll.add(Box.createRigidArea(new Dimension(63, 22)));
-            NoClearAll.setVisible(false);
+            //NoClearAll.setVisible(false);
             NavBar.add(NoClearAll);
          NavBar.add(Box.createRigidArea(new Dimension(39, 1)));
          NavTabs = new JPanel();
@@ -162,19 +167,19 @@ public class AntView {
                public void createButtons() {
                   this.add(new ClickableMouseOverComponent(NavBarAssets.next(3)) {
                      @Override
+                     public void mouseClicked(MouseEvent ME) { super.mouseClicked(ME); if (ME != null)  AntController.navBarNotifs(); }
+                  });
+                  this.add(new ClickableMouseOverComponent(NavBarAssets.next(3)) {
+                     @Override
+                     public void mouseClicked(MouseEvent ME) { super.mouseClicked(ME); AntController.navBarTexts(); }
+                  });
+                  this.add(new ClickableMouseOverComponent(NavBarAssets.next(3)) {
+                     @Override
                      public void mouseClicked(MouseEvent ME) { super.mouseClicked(ME); AntController.navBarGear(); }
                   });
                   this.add(new ClickableMouseOverComponent(NavBarAssets.next(3)) {
                      @Override
                      public void mouseClicked(MouseEvent ME) { super.mouseClicked(ME); AntController.navBarInfo(); }
-                  });
-                  this.add(new ClickableMouseOverComponent(NavBarAssets.next(3)) {
-                     @Override
-                     public void mouseClicked(MouseEvent ME) { super.mouseClicked(ME); AntController.navBarNotifs(); }
-                  });
-                  this.add(new ClickableMouseOverComponent(NavBarAssets.next(3)) {
-                     @Override
-                     public void mouseClicked(MouseEvent ME) { super.mouseClicked(ME); AntController.navBarTexts(); }
                   });
                   this.selectFirst();
                }
@@ -272,7 +277,7 @@ public class AntView {
          Notifications.setLayout(new BoxLayout(Notifications, BoxLayout.Y_AXIS));
          AntFrame.fixComponentSizes(Notifications, new Dimension(400, 367));
          Notifications.setOpaque(false);
-         //Notifications.setVisible(false);
+         Notifications.setVisible(false);
          NotificationList = new JPanel();
             NotificationList.setLayout(new BoxLayout(NotificationList, BoxLayout.Y_AXIS));
             //NotificationList.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 0));
@@ -320,7 +325,7 @@ public class AntView {
       Splash = new JPanel();
          AntFrame.fixComponentSizes(Splash, new Dimension(400, 400));
          Splash.setOpaque(false);
-         Splash.setVisible(false);
+         Splash.setVisible(true);
          //Splash.setLayout(new BoxLayout(Splash, BoxLayout.Y_AXIS));
          Splash.add(new BackgroundPanel(Model.getImageList(ModelData.FrameAssets).next(), BackgroundPanel.ACTUAL));
    }
@@ -333,6 +338,65 @@ public class AntView {
          __.add(Box.createRigidArea(new Dimension(314, 9)));//286
          __.add(new NotificationCard(Model.getImageList(ModelData.NotificationAssets).tailList(1).next(6), id, Text));
       NotificationList.add(__);
+   }
+   
+   //navbar visible is the default
+   public static void setScene(ViewState __) {
+      // current state description
+      ViewState __CurrentViewState = Model.getCurrentViewState();
+         if (__CurrentViewState == __) return;
+      JPanel __CurrentScene = Model.getCurrentScene();
+      boolean __connected = Model.getConnected();
+      
+      // future state description
+      Model.setCurrentViewState(__);
+      switch(__) {
+         case ConnectionOptions: Model.setCurrentScene(ConnectionOptions); break;
+         case ConnectionScan: Model.setCurrentScene(ConnectionScan); break;
+         case Notifications: Model.setCurrentScene(Notifications); break;
+         case TextThreadList: Model.setCurrentScene(TextThreadList); break;
+         case TextThread: Model.setCurrentScene(TextThread); break;
+         case About: Model.setCurrentScene(About); break;
+         default:
+      }
+      
+      // transition from current to future state
+      switch(__CurrentViewState) { // cleanup
+         case Splash:
+            NavBar.setVisible(true);
+            if (!__connected) NavTabs.setVisible(false);
+            break;
+         case ConnectionOptions:
+            if (!__connected && __ == ViewState.ConnectionOptions) { // remove clicked
+               NavTabs.setVisible(false);
+            } else { // generate clicked
+               Back.setVisible(true);
+               NoBack.setVisible(false);
+               ClearAll.setVisible(true);
+               NoClearAll.setVisible(false);
+            }
+            break;
+         case ConnectionScan:
+            Back.setVisible(false);
+            NoBack.setVisible(true);
+            if (__ == ViewState.Notifications) {
+               NavTabs.setVisible(true);
+               ((ButtonGroup)(NavTabs.getComponents()[0])).selectFirst();
+            }
+            break;
+         case Notifications:
+            ClearAll.setVisible(false);
+            NoClearAll.setVisible(true);
+         default:
+      }
+      switch(__) { // prep
+         case Notifications:
+            ClearAll.setVisible(true);
+            NoClearAll.setVisible(false);
+         default:
+      }
+      __CurrentScene.setVisible(false);
+      Model.getCurrentScene().setVisible(true);
    }
    
    public void removeNotification(Component __) {
@@ -376,5 +440,6 @@ public class AntView {
          Window.dispose();
    }
    
+   public static boolean isNavVisible() { return NavBar.isVisible(); }
    public static AntFrame Window() { return Window; }
 }
