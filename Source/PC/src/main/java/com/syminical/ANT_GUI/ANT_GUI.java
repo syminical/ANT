@@ -40,8 +40,9 @@ public class ANT_GUI {
       View = new AntView();
       View.setModel(Model);
       
+      AntController.link(Model, View);
       AntController.initWindowListener();
-      //AntController.splashAnimation();
+      AntController.splashAnimation();
    }
    
    public static AntView View() { return View; }
