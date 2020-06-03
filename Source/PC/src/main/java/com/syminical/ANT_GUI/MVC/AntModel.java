@@ -45,7 +45,8 @@ public class AntModel {
       MiscAssets = new ImageList();
       
       try (
-         FileInputStream LicenseFileStream = new FileInputStream(new File( this.getClass().getResource("/LICENSE").toURI() ));
+         //FileInputStream LicenseFileStream = new FileInputStream(new File( this.getClass().getResource("/LICENSE").toURI() ));
+         InputStream LicenseInputStream = this.getClass().getResourceAsStream("/LICENSE");
       ) { //Inter-group order does not matter, Intra-group order does.
          FrameAssets.add(ImageIO.read( this.getClass().getResource("/assets/frame/SPLASH.png") ));
          FrameAssets.add(ImageIO.read( this.getClass().getResource("/assets/frame/FRAME.png") ));
@@ -99,8 +100,10 @@ public class AntModel {
          NotificationAssets.add(ImageIO.read( this.getClass().getResource("/assets/notif/notifCard/NCcloseX/NCXinactive.png") ));
          
          
-         byte[] LicenseBytes = new byte[LicenseFileStream.available()];
-         LicenseFileStream.read(LicenseBytes);
+         //byte[] LicenseBytes = new byte[LicenseFileStream.available()];
+         //LicenseFileStream.read(LicenseBytes);
+         byte[] LicenseBytes = new byte[LicenseInputStream.available()];
+         LicenseInputStream.read(LicenseBytes, 0, LicenseBytes.length);
          License = new String(LicenseBytes, "UTF-8");
          MiscAssets.add(ImageIO.read( this.getClass().getResource("/assets/misc/scrollbar/SBactive.png") ));
          MiscAssets.add(ImageIO.read( this.getClass().getResource("/assets/misc/scrollbar/SBinactive.png") ));
