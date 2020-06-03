@@ -46,8 +46,8 @@ public class AntController {
    public static void connOpSetReadTxts() { }
    public static void connOpSetSendTxts() { }
    public static void connOpGenerate() { View.setScene(ViewState.ConnectionScan); }
-   public static void connOpDelete() { View.setScene(ViewState.ConnectionOptions); }
-   public static void connEstablished() { View.setScene(ViewState.Notifications); }
+   public static void connOpDelete() { Model.setConnected(false); View.setScene(ViewState.ConnectionOptions); }
+   public static void connEstablished() { Model.setConnected(true); View.setScene(ViewState.Notifications); }
    
    public static void notificationCardClose(Component __) { ANT_GUI.View().removeNotification(__); }
    
