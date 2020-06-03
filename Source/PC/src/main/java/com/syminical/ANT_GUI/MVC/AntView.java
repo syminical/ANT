@@ -26,7 +26,7 @@ public class AntView {
    private static AntModel Model;
    private static AntFrame Window;
    private final Dimension WINDOW_SIZE = new Dimension( 410, 439 );
-   private static JPanel Body, Scene, NavBar, NoNavBar, Back, NoBack, ClearAll, NoClearAll, NavTabs, NotificationList;
+   private static JPanel Body, Scene, NavBar, NoNavBar, Back, NoBack, ClearAll, NoClearAll, NavTabs, NotificationList, DeleteSpacer;
    //below are the scenes available for Scene.
    private static JPanel Splash, ConnectionOptions, ConnectionScan, Notifications, TextThreadList, TextThread, About;
    private JPanel CurrentScene;
@@ -254,14 +254,14 @@ public class AntView {
          
          ConnectionOptions.add(Box.createRigidArea(new Dimension(1, 17)));
          
-         JPanel DeleteSpacer = new JPanel();
+         DeleteSpacer = new JPanel();
             DeleteSpacer.setOpaque(false);
             DeleteSpacer.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
             AntFrame.fixComponentSizes(DeleteSpacer, new Dimension(400, 8));
             DeleteSpacer.add(Box.createRigidArea(new Dimension(177, 1)));
             DeleteSpacer.add(new MouseOverComponent(ConnectionAssets.next(2)) {
                @Override
-               public void mouseClicked(MouseEvent ME) { if (ME.getComponent().isVisible()) { AntController.connOpDelete(); } }
+               public void mouseClicked(MouseEvent ME) { if (ME.getComponent().isVisible()) AntController.connOpDelete(); }
             });
          ConnectionOptions.add(DeleteSpacer);
             
@@ -344,7 +344,7 @@ public class AntView {
    public static void setScene(ViewState __) {
       // current state description
       ViewState __CurrentViewState = Model.getCurrentViewState();
-         if (__CurrentViewState == __) return;
+         if (__CurrentViewState == __ && __ != ViewState.ConnectionOptions) return;
       JPanel __CurrentScene = Model.getCurrentScene();
       boolean __connected = Model.getConnected();
       
@@ -364,21 +364,12 @@ public class AntView {
       switch(__CurrentViewState) { // cleanup
          case Splash:
             NavBar.setVisible(true);
-            if (!__connected) NavTabs.setVisible(false);
-            break;
-         case ConnectionOptions:
-            if (!__connected && __ == ViewState.ConnectionOptions) { // remove clicked
-               NavTabs.setVisible(false);
-            } else { // generate clicked
-               Back.setVisible(true);
-               NoBack.setVisible(false);
-               ClearAll.setVisible(true);
-               NoClearAll.setVisible(false);
-            }
             break;
          case ConnectionScan:
             Back.setVisible(false);
             NoBack.setVisible(true);
+               ClearAll.setVisible(false);
+               NoClearAll.setVisible(true);
             if (__ == ViewState.Notifications) {
                NavTabs.setVisible(true);
                ((ButtonGroup)(NavTabs.getComponents()[0])).selectFirst();
@@ -393,6 +384,21 @@ public class AntView {
          case Notifications:
             ClearAll.setVisible(true);
             NoClearAll.setVisible(false);
+            break;
+         case ConnectionOptions:
+            if (!__connected) {
+               NavTabs.setVisible(false);
+               DeleteSpacer.setVisible(false);
+            } else {
+               NavTabs.setVisible(true);
+               DeleteSpacer.setVisible(true);
+            }
+            break;
+         case ConnectionScan:
+            Back.setVisible(true);
+            NoBack.setVisible(false);
+               ClearAll.setVisible(true);
+               NoClearAll.setVisible(false);
          default:
       }
       __CurrentScene.setVisible(false);
