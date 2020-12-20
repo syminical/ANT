@@ -265,7 +265,16 @@ public class AntView {
             });
          ConnectionOptions.add(DeleteSpacer);
             
-      ConnectionScan = new JPanel();
+      ConnectionScan = new JPanel() {
+         @Override
+         public void paintComponent(Graphics G) {
+            super.paintComponent(G);
+            G.setFont(new Font("Courier New Bold", Font.PLAIN, 12));
+            G.setColor(Color.WHITE);
+            G.drawString("Click 'CLEAR ALL' above to continue for now.", 47, 13);
+            //305
+         }
+      };
          ConnectionScan.setLayout(new BoxLayout(ConnectionScan, BoxLayout.Y_AXIS));
          AntFrame.fixComponentSizes(ConnectionScan, new Dimension(400, 316));
          ConnectionScan.setOpaque(false);
