@@ -1,5 +1,6 @@
 # Android Notifications & Texts - A.N.T.
-**This project is under development.**
+**Development for this project is on hold. The PC GUI demo is available above.**  
+Double click on `ANT_GUI_DEMO.jar`, or use `java -jar ANT_GUI_DEMO.jar` to run it.
 
 ```
               ,
